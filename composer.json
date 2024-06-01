@@ -1,0 +1,10 @@
+{
+    "name": "codelibrary/world",
+    "description": "List of countries and their associated data.",
+    "authors": [
+        {
+            "name": "Nikola Zeravcic",
+            "email": "niks986@gmail.com"
+        }
+    ]
+}
