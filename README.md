@@ -4,7 +4,8 @@ List of countries and their associated data.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) and
+[CODE OF CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ## Change log
 
