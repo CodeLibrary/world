@@ -2,6 +2,10 @@
 
 List of countries and their associated data.
 
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed
@@ -10,7 +14,7 @@ recently.
 ## Security
 
 If you discover any security related issues, please email to
-niks986@gmail.com.
+niks986@gmail.com instead of using the issue tracker.
 
 ## Credits
 

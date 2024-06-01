@@ -2,6 +2,10 @@
     "name": "codelibrary/world",
     "description": "List of countries and their associated data.",
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/codelibrary/world/issues",
+        "source": "https://github.com/codelibrary/world"
+    },
     "authors": [
         {
             "name": "Nikola Zeravcic",
