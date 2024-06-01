@@ -1,6 +1,7 @@
 {
     "name": "codelibrary/world",
     "description": "List of countries and their associated data.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Nikola Zeravcic",
