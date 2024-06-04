@@ -23,5 +23,14 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": [
+            "@test:style",
+            "@test:unit"
+        ],
+        "fix:style": "@php vendor/bin/phpcbf --ignore=*/vendor/* -p --standard=PSR12 .",
+        "test:style": "@php vendor/bin/phpcs --colors --ignore=*/vendor/* -p --standard=PSR12 .",
+        "test:unit": "@php vendor/bin/phpunit"
     }
 }
