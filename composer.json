@@ -26,8 +26,10 @@
     },
     "scripts": {
         "test": [
+            "@test:style",
             "@test:unit"
         ],
+        "test:style": "@php vendor/bin/phpcs --colors --ignore=*/vendor/* -p --standard=PSR12 .",
         "test:unit": "@php vendor/bin/phpunit"
     }
 }
