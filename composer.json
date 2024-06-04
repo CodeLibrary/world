@@ -11,5 +11,8 @@
             "name": "Nikola Zeravcic",
             "email": "niks986@gmail.com"
         }
-    ]
+    ],
+    "require": {
+        "php": "^8.2"
+    }
 }
