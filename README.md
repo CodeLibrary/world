@@ -2,6 +2,17 @@
 
 List of countries and their associated data.
 
+## Build and run for dev environment
+
+The `docker build` command will copy the local content to the container. So use 
+`docker run -v` (or `--volume`) option to bind with local content.
+
+```bash
+docker build -t [IMAGE_NAME] .
+docker run -v .:/var/www/html -d [IMAGE_NAME]
+docker exec -it [CONTAINER_NAME] /bin/bash
+```
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and
