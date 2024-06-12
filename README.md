@@ -1,6 +1,27 @@
 # CodeLibrary / World
 
-List of countries and their associated data.
+PHP package as service for endpoint resource of countries and their associated 
+data.
+
+## Installation
+
+Add this package directly with composer:
+
+```bash
+composer require codelibrary/world
+```
+
+## Build and run for dev environment
+
+The `docker build` command will copy the local content to the container. So use
+`docker run -v` (or `--volume`) option to bind with local content:
+
+```bash
+cd /path/to/project/
+docker build -t [IMAGE_NAME] .
+docker run -d -v .:/var/www/html --name [NEW_CONTAINER_NAME] [IMAGE_NAME]
+docker exec -it [NEW_CONTAINER_NAME] /bin/bash
+```
 
 ## Contributing
 
