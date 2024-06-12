@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use CodeLibrary\World\CountryDataById;
 use CodeLibrary\World\CountryDataByName;
+use CodeLibrary\World\Exceptions\InvalidCountryIdException;
 use CodeLibrary\World\Exceptions\InvalidCountryNameException;
 use CodeLibrary\World\Exceptions\InvalidLanguageCodeException;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -46,6 +48,25 @@ class CountryDataResolverTest extends TestCase
             'ΕΛΛΗΝΙΚΉ Δημοκρατία ID is 300' => ['ΕΛΛΗΝΙΚΉ Δημοκρατία', 300],
         ];
     }
+    public static function countryNameOnSerbianByIdProvider(): array
+    {
+        return [
+            'ID 533 is Aruba' => [533, 'Aruba', 'Aruba'],
+            'ID 4 is Avganistan' => [4, 'Islamska Republika Avganistan', 'Avganistan'],
+            'ID 688 is Srbija ' => [688, 'Republika Srbija', 'Srbija'],
+            'ID 300 is Grčka' => [300, 'Republika Grčka', 'Grčka'],
+        ];
+    }
+
+    public static function countryNameDefaultByIdProvider(): array
+    {
+        return [
+            'ID 533 is Aruba' => [533, 'Aruba', 'Aruba'],
+            'ID 4 is Afghanistan' => [4, 'Islamic Republic of Afghanistan', 'Afghanistan'],
+            'ID 688 is Serbia' => [688, 'Republic of Serbia', 'Serbia'],
+            'ID 300 is Greece' => [300, 'Hellenic Republic', 'Greece'],
+        ];
+    }
 
     #[DataProvider('countryIdBySerbianNamesProvider')]
     public function testGetCountryIdBySerbianNames(string $name, int $expectedId): void
@@ -63,7 +84,7 @@ class CountryDataResolverTest extends TestCase
         $this->assertSame($expectedId, $countryId);
     }
 
-    public function testExceptionForInvalidLanguageCode(): void
+    public function testExceptionCountryIdForInvalidLanguageCode(): void
     {
         $this->expectException(InvalidLanguageCodeException::class);
         $country = new CountryDataByName('Afghanistan', 'aaa');
@@ -75,5 +96,61 @@ class CountryDataResolverTest extends TestCase
         $this->expectException(InvalidCountryNameException::class);
         $country = new CountryDataByName('Avganistan123', 'srp');
         $country->id();
+    }
+
+    #[DataProvider('countryNameOnSerbianByIdProvider')]
+    public function testGetCountryNameOnSerbianById(
+        int $countryId,
+        string $expectedOfficialName,
+        string $expectedCommonName,
+    ): void {
+        $country = new CountryDataById($countryId, 'srp');
+
+        $countryName = $country->name();
+        $this->assertSame($expectedOfficialName, $countryName);
+
+        $countryName = $country->nameCommon();
+        $this->assertSame($expectedCommonName, $countryName);
+    }
+
+    #[DataProvider('countryNameDefaultByIdProvider')]
+    public function testGetCountryNameDefaultById(
+        int $countryId,
+        string $expectedOfficialName,
+        string $expectedCommonName,
+    ): void {
+        $country = new CountryDataById($countryId, 'eng');
+
+        $countryName = $country->name();
+        $this->assertSame($expectedOfficialName, $countryName);
+
+        $countryName = $country->nameCommon();
+        $this->assertSame($expectedCommonName, $countryName);
+    }
+
+    public function testGetCountryNameNativeById(): void
+    {
+        $afghanistanId = 4;
+        $country = new CountryDataById($afghanistanId, 'prs');
+
+        $countryName = $country->name();
+        $this->assertSame('جمهوری اسلامی افغانستان', $countryName);
+
+        $countryName = $country->nameCommon();
+        $this->assertSame('افغانستان', $countryName);
+    }
+
+    public function testExceptionCountryNameForInvalidLanguageCode(): void
+    {
+        $this->expectException(InvalidLanguageCodeException::class);
+        $country = new CountryDataById(4, 'aaa');
+        $country->name();
+    }
+
+    public function testExceptionForInvalidCountryId(): void
+    {
+        $this->expectException(InvalidCountryIdException::class);
+        $country = new CountryDataById(1, 'eng');
+        $country->name();
     }
 }
