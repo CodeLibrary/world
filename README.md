@@ -1,6 +1,7 @@
 # CodeLibrary / World
 
-List of countries and their associated data.
+PHP package as service for endpoint resource of countries and their associated 
+data.
 
 ## Installation
 
