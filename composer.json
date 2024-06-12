@@ -17,7 +17,14 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1",
-        "squizlabs/php_codesniffer": "^3.10"
+        "codelibrary/countries": "^5.1@alpha",
+        "squizlabs/php_codesniffer": "^3.10",
+        "symfony/var-dumper": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "CodeLibrary\\World\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -32,5 +39,7 @@
         "fix:style": "@php vendor/bin/phpcbf --ignore=*/vendor/* -p --standard=PSR12 .",
         "test:style": "@php vendor/bin/phpcs --colors --ignore=*/vendor/* -p --standard=PSR12 .",
         "test:unit": "@php vendor/bin/phpunit"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
