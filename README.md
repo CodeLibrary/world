@@ -9,6 +9,8 @@ Add this package directly with composer:
 
 ```bash
 composer require codelibrary/world
+# or
+composer require codelibrary/world -n # --no-interaction (Docker SSH reasons)
 ```
 
 ## Build and run for dev environment
