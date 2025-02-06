@@ -46,7 +46,7 @@ readonly class NameImp implements Name
         $natives = !empty($this->data['name']['native']) ? array_keys((array)$this->data['name']['native']) : [];
 
         foreach ($natives as $native) {
-            foreach (['official', 'native'] as $type) {
+            foreach (['official', 'common'] as $type) {
                 try {
                     if ($name === $this->format($this->native($native, $type))) {
                         return true;
