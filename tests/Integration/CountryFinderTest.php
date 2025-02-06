@@ -39,6 +39,7 @@ class CountryFinderTest extends TestCase
             ['србија', 'Republic of Serbia', 'Serbia'],
             ['usa', 'United States of America', 'United States'],
             ['sad', 'United States of America', 'United States'],
+            ['ελλάδα', 'Hellenic Republic', 'Greece'],
         ];
     }
 
