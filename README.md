@@ -25,6 +25,36 @@ docker run -d -v .:/var/www/html --name [NEW_CONTAINER_NAME] [IMAGE_NAME]
 docker exec -it [NEW_CONTAINER_NAME] /bin/bash
 ```
 
+## Usage
+
+```php
+use CodeLibrary\World\CountryFinder;
+
+// optional params
+$extraCountryData = [
+    [
+        'name' => ['official' => 'Hellenic Republic'], // already existing key
+        'altSpellings' => ['hellenicccccccc'], // new custom values
+    ],
+    [
+        'name' => ['official' => 'Kingdom of Spain'],
+        'altSpellings' => ['The Kingdom of Spain'],
+    ],
+];
+
+$finder = new CountryFinder($extraCountryData);
+
+$finder->name('invalid country name here'); // throw 'InvalidCountryNameException'
+
+$country1 = $finder->name('Hellenicccccccc');
+$country2 = $finder->name('the kingdom of spain');
+
+$country2->hasName('spain'); // (bool) true
+$country2->hasName('spain, the kindom of'); // (bool) false
+echo $country2->name('fra'); // Royaume d'Espagne
+echo $country2->nameCommon('fra'); // Espagne
+```
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) and
