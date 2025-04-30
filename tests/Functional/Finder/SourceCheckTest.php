@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Integration;
+namespace Tests\Functional\Finder;
 
 use CodeLibrary\World\Contract\Country;
 use CodeLibrary\World\Contract\Finder;
@@ -11,7 +11,7 @@ use CodeLibrary\World\Exceptions\InvalidCountryNameException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class CountryFinderTest extends TestCase
+class SourceCheckTest extends TestCase
 {
     private readonly Finder $finder;
 
@@ -40,15 +40,18 @@ class CountryFinderTest extends TestCase
             ['usa', 'United States of America', 'United States'],
             ['sad', 'United States of America', 'United States'],
             ['ελλάδα', 'Hellenic Republic', 'Greece'],
+            ['hungary', 'Hungary', 'Hungary'],
+            ['MAĐARSKA', 'Hungary', 'Hungary'],
+            ['الجمهورية المجرية', 'Hungary', 'Hungary'],
         ];
     }
 
     #[DataProvider('searchForEnglishNamesProvider')]
-    public function testGetEnglishNames(string $input, string $official, string $common): void
+    public function testGetEnglishNames(string $input, string $expectedOfficial, string $expectedCommon): void
     {
         $country = $this->finder->name($input);
-        $this->assertSame($official, $country->name());
-        $this->assertSame($common, $country->nameCommon());
+        $this->assertSame($expectedOfficial, $country->name());
+        $this->assertSame($expectedCommon, $country->nameCommon());
     }
 
     public static function searchForCzechNamesProvider(): array
@@ -59,6 +62,7 @@ class CountryFinderTest extends TestCase
             ['србија', 'Srbská republika', 'Srbsko'],
             ['usa', 'Spojené státy americké', 'Spojené státy'],
             ['sad', 'Spojené státy americké', 'Spojené státy'],
+            ['hungary', 'Maďarsko', 'Maďarsko'],
         ];
     }
 
@@ -84,6 +88,8 @@ class CountryFinderTest extends TestCase
             ['netherlands', 'Kraljevina Holandija', 'Holandija'],
             ['Niederlande', 'Kraljevina Holandija', 'Holandija'],
             ['Holandija', 'Kraljevina Holandija', 'Holandija'],
+            ['hungary', 'Mađarska', 'Mađarska'],
+            ['mađarska', 'Mađarska', 'Mađarska'],
         ];
     }
 
@@ -91,42 +97,6 @@ class CountryFinderTest extends TestCase
     public function testGetCountrySerbianNames(string $input, string $official, string $common): void
     {
         $country = $this->finder->name($input);
-        $this->assertSame($official, $country->name('srp'));
-        $this->assertSame($common, $country->nameCommon('srp'));
-    }
-
-    public static function searchForSerbianExtraNamesProvider(): array
-    {
-        return [
-            ['grcka', 'Republika Grčka', 'Grčka'],
-            ['nemacka', 'Savezna Republika Nemačka', 'Nemačka'],
-            ['spanija', 'Kraljevina Španija', 'Španija'],
-        ];
-    }
-
-    #[DataProvider('searchForSerbianExtraNamesProvider')]
-    public function testGetCountrySerbianExtraNames(string $input, string $official, string $common): void
-    {
-        $extraGreece = [
-            'name' => ['official' => 'Hellenic Republic'],
-            'altSpellings' => ['grcka'],
-        ];
-
-        $extraGermany = [
-            'name' => ['official' => 'Federal Republic of Germany'],
-            'altSpellings' => ['Nemacka'],
-        ];
-
-        $extraSpain = [
-            'name' => ['official' => 'Kingdom of Spain'],
-            'altSpellings' => ['spanija'],
-        ];
-
-        $extraCountriesData = [$extraGreece, $extraGermany, $extraSpain];
-        $finder = new CountryFinder($extraCountriesData);
-
-        $country = $finder->name($input);
-
         $this->assertSame($official, $country->name('srp'));
         $this->assertSame($common, $country->nameCommon('srp'));
     }
