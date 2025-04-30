@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Country;
+namespace Tests\Unit\Country\Serbia;
 
 use CodeLibrary\World\Contract\Country\Name;
 use CodeLibrary\World\Country\NameImp;
@@ -69,43 +69,53 @@ class HasNameTest extends TestCase
         $this->name = new NameImp($this->country);
     }
 
-    public function testInvalidName(): void
-    {
-        $this->assertFalse($this->name->has('Invalid'));
-    }
-
-    public static function nameAndLangProvider(): array
+    public static function invalidNameProvider(): array
     {
         return [
-            ['Republic Of Serbia', true],
-            ['REPUBLIC OF SERBIA', true],
-            ['Serbia', true],
-            ['SERBIA', true],
-            ['Republika Srbija', true],
-            ['Srbija', true],
-            ['Република Србија', true],
-            ['РЕПУБЛИКА Србија', true],
-            ['Србија', true],
-            ['СРБИЈА', true],
-            ['جمهورية صيربيا', true],
-            ['صيربيا', true],
-            ['Srbská republika', true],
-            ['SRBSKÁ REPUBLIKA', true],
-            ['Srbsko', true],
-            ['Republik Serbien', true],
-            ['Serbien', true],
-            ['Республика Сербия', true],
-            ['РЕСПУБЛИКА СЕРБИЯ', true],
-            ['Сербия', true],
-            ['СЕРБИЯ', true],
-            ['Serbia, Republic of', true],
-            ['serBIA, REPUBLIC of', true],
+            ['Serbia, Republic'],
+            ['serBIA REPUBLIC of'],
+            ['Serbistan'],
         ];
     }
 
-    #[DataProvider('nameAndLangProvider')]
-    public function testNameAndLangs(string $name, bool $expected): void
+    #[DataProvider('invalidNameProvider')]
+    public function testInvalidName(string $name): void
     {
-        $this->assertSame($expected, $this->name->has($name));
+        $this->assertFalse($this->name->has($name));
+    }
+
+    public static function validNameProvider(): array
+    {
+        return [
+            ['Republic Of Serbia'],
+            ['REPUBLIC OF SERBIA'],
+            ['Serbia'],
+            ['SERBIA'],
+            ['Republika Srbija'],
+            ['Srbija'],
+            ['Република Србија'],
+            ['РЕПУБЛИКА Србија'],
+            ['Србија'],
+            ['СРБИЈА'],
+            ['جمهورية صيربيا'],
+            ['صيربيا'],
+            ['Srbská republika'],
+            ['SRBSKÁ REPUBLIKA'],
+            ['Srbsko'],
+            ['Republik Serbien'],
+            ['Serbien'],
+            ['Республика Сербия'],
+            ['РЕСПУБЛИКА СЕРБИЯ'],
+            ['Сербия'],
+            ['СЕРБИЯ'],
+            ['Serbia, Republic of'],
+            ['serBIA, REPUBLIC of'],
+        ];
+    }
+
+    #[DataProvider('validNameProvider')]
+    public function testValidName(string $name): void
+    {
+        $this->assertTrue($this->name->has($name));
     }
 }

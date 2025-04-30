@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Country;
+namespace Tests\Unit\Country\Serbia;
 
 use CodeLibrary\World\Contract\Country\Name;
 use CodeLibrary\World\Country\NameImp;
