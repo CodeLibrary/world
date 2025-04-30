@@ -14,7 +14,7 @@ readonly class CountryFinder implements Finder
     private array $list;
 
     public function __construct(
-        private array $extraCountriesData = [],
+        private array $countriesAdditions = [],
     ) {
         $this->list = $this->source();
     }
@@ -24,12 +24,12 @@ readonly class CountryFinder implements Finder
         $json = file_get_contents(__DIR__ . '/dist/countries-unescaped.json');
         $list = json_decode($json, true);
 
-        foreach ($this->extraCountriesData as $countryData) {
-            if (!empty($countryData['altSpellings']) && is_array($countryData['altSpellings'])) {
+        foreach ($this->countriesAdditions as $countryAddition) {
+            if (!empty($countryAddition['altSpellings']) && is_array($countryAddition['altSpellings'])) {
                 foreach ($list as &$item) {
-                    if (strtoupper($countryData['name']['official']) === strtoupper($item['name']['official'])) {
+                    if (strtoupper($countryAddition['name']['official']) === strtoupper($item['name']['official'])) {
                         $item['altSpellings'] = array_unique(
-                            array_merge($item['altSpellings'], $countryData['altSpellings']),
+                            array_merge($item['altSpellings'], $countryAddition['altSpellings']),
                         );
                         continue 2;
                     }
